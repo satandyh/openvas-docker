@@ -35,5 +35,3 @@ if [ "$OV_UPDATE" == "yes" ]; then
 	/usr/sbin/greenbone-certdata-sync 
 	/usr/sbin/greenbone-scapdata-sync
 fi
-
-
