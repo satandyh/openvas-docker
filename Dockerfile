@@ -1,9 +1,6 @@
 FROM centos:latest
 LABEL maintainer="satandyh@github.com"
 
-ENV OV_PASSWORD=admin \
-  PUBLIC_HOSTNAME=openvas
-
 ## install necessary packages
 RUN yum -y update && yum -y install \
     wget \
