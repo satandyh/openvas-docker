@@ -7,12 +7,11 @@ Slave openvas installation is a part of distributed architecture that used for s
 
 1. use CentOS as base image
 2. install openvas and necessary dependensies
-3. copy configs for openvas components
-3.1 redis
-3.2 openvas-scanner
-3.3 openvas-manager
-3.4 gsad
-3.5 crontab
+3. copy configs for openvas components  
+  3.1 redis  
+  3.2 openvas-manager  
+  3.3 gsad  
+  3.4 crontab
 4. copy CA to volume on host machine
 
 # some description for install and connect master part
