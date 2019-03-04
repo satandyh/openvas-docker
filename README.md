@@ -62,4 +62,5 @@ cat /var/lib/openvas/private/CA/cacert.pem
 - http://lists.wald.intevation.org/pipermail/openvas-discuss/2016-June/009701.html
 - https://sysadmin-ramblings.blogspot.com/2017/04/openvas-9-distributed-setup.html
 - https://github.com/atomicorp/openvas
+- https://github.com/dgiorgio/openvas-source
 
