@@ -11,7 +11,14 @@ if [ ! -f /var/lib/openvas/CA/cacert.pem ]; then
 fi
 
 ## start redis server first
-/usr/bin/redis-server /etc/redis.conf &
+/usr/bin/redis-server /etc/redis.conf --daemonize yes
+
+## redis check
+CHECK="$(/usr/bin/redis-cli ping)"
+while [ "${CHECK}" != "PONG" ]; do
+  sleep 1
+  CHECK="$(/usr/bin/redis-cli ping)"
+done
 
 ## start openvas system after redis
 /usr/sbin/openvassd
