@@ -31,8 +31,11 @@ RUN yum -y update && yum -y install \
 ## then install openvas
 ## and update it's bases
 WORKDIR /root
-RUN NON_INT=1 wget -q -O - https://updates.atomicorp.com/installers/atomic |sh && \
-  yum -y update && yum -y install openvas OSPd-nmap OSPd && \
+ENV NON_INT=1
+RUN wget -q -O - https://updates.atomicorp.com/installers/atomic |sh && \
+  yum -y update && yum -y install openvas \
+    OSPd-nmap \
+    OSPd && \
   yum -y clean all && \
   /usr/sbin/greenbone-nvt-sync && \
   /usr/sbin/greenbone-certdata-sync && \
