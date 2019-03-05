@@ -36,16 +36,16 @@ RUN wget -q -O - https://updates.atomicorp.com/installers/atomic |sh && \
   yum -y update && yum -y install openvas \
     OSPd-nmap \
     OSPd && \
-  yum -y clean all && \
-  /usr/sbin/greenbone-nvt-sync && \
-  /usr/sbin/greenbone-certdata-sync && \
-  /usr/sbin/greenbone-scapdata-sync && \
-  /usr/sbin/openvasmd --rebuild --progress
+  yum -y clean all
+#RUN /usr/sbin/greenbone-nvt-sync && \
+#  /usr/sbin/greenbone-certdata-sync && \
+#  /usr/sbin/greenbone-scapdata-sync && \
+#  /usr/sbin/openvasmd --rebuild --progress
 
 ## copy config files to their places
 COPY config/redis.conf /etc/redis.conf
 COPY config/gsad /etc/sysconfig/gsad
-COPY config/opevas-manager /etc/sysconfig/openvas-manager
+COPY config/openvas-manager /etc/sysconfig/openvas-manager
 ## crontab tasks for every night update
 COPY config/openvas-cron /etc/cron.d/openvas.cron
 ## Apply cron job
