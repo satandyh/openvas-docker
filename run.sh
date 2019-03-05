@@ -3,7 +3,7 @@
 ## two vars for start cantainer
 OV_PASSWORD=${OV_PASSWORD:-admin}
 PUBLIC_HOSTNAME=${PUBLIC_HOSTNAME:-openvas}
-OV_UPDATE=${OV_UPDATE:no}
+OV_UPDATE=${OV_UPDATE:-no}
 
 ## Check certs
 if [ ! -f /var/lib/openvas/CA/cacert.pem ]; then
