@@ -14,14 +14,14 @@ RUN yum -y update && yum -y install \
     bzip2 \
     useradd \
     openssh && \
-  yum clean all
+  yum -y clean all
 
 ## textlive not necessary part because docker container will be used as only scanner and here no need to store any reports
 #RUN yum -y install texlive-collection-fontsrecommended \
 #    texlive-collection-latexrecommended \
 #    texlive-changepage \
 #    texlive-titlesec && \
-#  yum clean all && \
+#  yum -y clean all && \
 #  mkdir -p /usr/share/texlive/texmf-local/tex/latex/comment && \
 #  wget -q --no-check-certificate http://mirrors.ctan.org/macros/latex/contrib/comment/comment.sty -P /usr/share/texlive/texmf-local/tex/latex/comment && \
 #  chmod 644 /usr/share/texlive/texmf-local/tex/latex/comment/comment.sty && \
@@ -33,7 +33,7 @@ RUN yum -y update && yum -y install \
 WORKDIR /root
 RUN NON_INT=1 wget -q -O - https://updates.atomicorp.com/installers/atomic |sh && \
   yum -y update && yum -y install openvas OSPd-nmap OSPd && \
-  yum clean all && \
+  yum -y clean all && \
   /usr/sbin/greenbone-nvt-sync && \
   /usr/sbin/greenbone-certdata-sync && \
   /usr/sbin/greenbone-scapdata-sync && \
