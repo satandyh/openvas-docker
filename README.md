@@ -12,24 +12,26 @@ Slave openvas installation is a part of distributed architecture that used for s
 Based on CentOS:latest image.
 
 ### build
-Firstly build image. For do this clone repository by `git clone` and go inside repository directory. Run next command to build image. This will create local image tagged **satandyh/openvas**.
+Firstly build image. For do this clone repository by `git clone` and go inside repository directory. Run next command to build image. This will create local image tagged **satandyh/openvas** (or you can choose your name).
 
 ```shell
 docker build -t satandyh/openvas .
 ```
 
 ### run
-First look by `ip --brief address` ip which You will use for connect to your container to master server and for web access. Use next command to run container. 
+First, look which ip address (by command `ip --brief address`) You will use to connect to your container. It will be used as for master server connection and for web access to itself.
+
+Use next command to run container.
 
 ```shell
-docker run -d -p 443:443 -p 9390:9390 -e PUBLIC_HOSTNAME=<YOUR_SERVER_IP> -e OV_PASSWORD=<YOUR_PASSWORD> --name openvas satandyh/openvas
+docker run -d -p 443:<WEB_PORT> -p 9390:<OMP_PORT> -e PUBLIC_HOSTNAME=<YOUR_SERVER_IP> -e OV_PASSWORD=<YOUR_PASSWORD> --name openvas satandyh/openvas
 ```
 
-After some time container will up and You can connect to it thru the browser using URL **https://YOUR_SERVER_IP/**. Login will be admin. Password You choose by yourself.
+After some time container will up and You can connect to it thru the browser using URL **https://YOUR_SERVER_IP:WEB_PORT/**. Login will be **admin**. Password You choose by yourself otherwise it will be **admin**.
 
-### to connect to the master server
+### to make connection to the master server
 
-1. Go inside container
+1. Go inside container by command
 ```shell
 docker exec -it openvas bash
 ```
@@ -50,7 +52,7 @@ cat /var/lib/openvas/private/CA/cacert.pem
 5. Go to Web-UI of master openvas server and add new "Scanner". 
 - **Name** - whatever you want
 - **Host** - <YOUR_SERVER_IP>
-- **Port** - 9390
+- **Port** - <OMP_PORT>
 - **Type** - OMP Slave
 - **CA Certificate** - download cacert.pem file
 - **Credential** - choose your just created credentials
