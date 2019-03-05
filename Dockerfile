@@ -13,11 +13,15 @@ RUN yum -y update && yum -y install \
     alien \
     bzip2 \
     useradd \
-    openssh && \
+    openssh \
+    cronie \
+    crontabs \
+    cronie-anacron && \
   yum -y clean all
 
 ## textlive not necessary part because docker container will be used as only scanner and here no need to store any reports
-#RUN yum -y install texlive-collection-fontsrecommended \
+#RUN yum -y update && yum -y install \
+#    texlive-collection-fontsrecommended \
 #    texlive-collection-latexrecommended \
 #    texlive-changepage \
 #    texlive-titlesec && \
@@ -33,7 +37,8 @@ RUN yum -y update && yum -y install \
 WORKDIR /root
 ENV NON_INT=1
 RUN wget -q -O - https://updates.atomicorp.com/installers/atomic |sh && \
-  yum -y update && yum -y install openvas \
+  yum -y update && yum -y install \
+    openvas \
     OSPd-nmap \
     OSPd && \
   yum -y clean all
@@ -51,9 +56,11 @@ COPY config/openvas-cron /etc/cron.d/openvas.cron
 ## Apply cron job
 RUN crontab /etc/cron.d/openvas.cron
 
-## need to add hostname for start 
-## and CA config 
+## need to add hostname for start
+## and CA config
 
-CMD /run.sh
+COPY run.sh /usr/local/bin/run.sh
+RUN chmod +x /usr/local/bin/run.sh
+CMD /usr/local/bin/run.sh
 
 EXPOSE 443 9390
