@@ -14,10 +14,10 @@ fi
 /usr/bin/redis-server /etc/redis.conf --daemonize yes
 
 ## redis check
-CHECK="$(/usr/bin/redis-cli ping)"
+CHECK="$(/usr/bin/redis-cli -s /tmp/redis.sock ping)"
 while [ "${CHECK}" != "PONG" ]; do
   sleep 1
-  CHECK="$(/usr/bin/redis-cli ping)"
+  CHECK="$(/usr/bin/redis-cli -s /tmp/redis.sock ping)"
 done
 
 ## start openvas system after redis
@@ -41,7 +41,7 @@ if [ "$OV_UPDATE" == "yes" ]; then
 	/usr/sbin/greenbone-nvt-sync
 	/usr/sbin/greenbone-certdata-sync
 	/usr/sbin/greenbone-scapdata-sync
-	/usr/sbin/openvasmd --rebuild
+	/usr/sbin/openvasmd --rebuild --progress
 fi
 
 /bin/tail -F /var/log/openvas/*
