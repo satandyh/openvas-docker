@@ -38,7 +38,7 @@ docker exec -it openvas bash
 
 2. Look certificate of openvas (it was generated at installation step).
 ```shell
-cat /var/lib/openvas/private/CA/cacert.pem
+cat /var/lib/openvas/CA/cacert.pem
 ```
 
 3. Copy certificate to file with name **cacert.pem** on your local computer.
