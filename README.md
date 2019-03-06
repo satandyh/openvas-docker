@@ -65,4 +65,4 @@ cat /var/lib/openvas/private/CA/cacert.pem
 - https://sysadmin-ramblings.blogspot.com/2017/04/openvas-9-distributed-setup.html
 - https://github.com/atomicorp/openvas
 - https://github.com/dgiorgio/openvas-source
-
+- https://habr.com/ru/company/redmadrobot/blog/305364/
