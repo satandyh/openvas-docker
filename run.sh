@@ -27,7 +27,7 @@ done
 
 ## Check for users, and create admin
 if ! [[ $(openvasmd --get-users) ]] ; then
-	/usr/sbin/openvasmd openvasmd --create-user=admin
+	/usr/sbin/openvasmd --create-user=admin --role=Admin
 	/usr/sbin/openvasmd --user=admin --new-password=$OV_PASSWORD
 fi
 
