@@ -1,5 +1,3 @@
-> Beware - I still not test this repo. It may even not start!
-
 # openvas-docker
 This is dockerfile and several configs for build and run openvas as slave in docker container.
 
