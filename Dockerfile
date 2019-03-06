@@ -19,7 +19,8 @@ RUN yum -y update && yum -y install \
     cronie-anacron && \
   yum -y clean all
 
-## textlive not necessary part because docker container will be used as only scanner and here no need to store any reports
+## textlive not necessary part because docker container will be used as only scanner 
+## and here no need to store any reports
 #RUN yum -y update && yum -y install \
 #    texlive-collection-fontsrecommended \
 #    texlive-collection-latexrecommended \
@@ -27,7 +28,9 @@ RUN yum -y update && yum -y install \
 #    texlive-titlesec && \
 #  yum -y clean all && \
 #  mkdir -p /usr/share/texlive/texmf-local/tex/latex/comment && \
-#  wget -q --no-check-certificate http://mirrors.ctan.org/macros/latex/contrib/comment/comment.sty -P /usr/share/texlive/texmf-local/tex/latex/comment && \
+#  wget -q --no-check-certificate \
+#    http://mirrors.ctan.org/macros/latex/contrib/comment/comment.sty \
+#    -P /usr/share/texlive/texmf-local/tex/latex/comment && \
 #  chmod 644 /usr/share/texlive/texmf-local/tex/latex/comment/comment.sty && \
 #  texhash
 
@@ -42,10 +45,10 @@ RUN wget -q -O - https://updates.atomicorp.com/installers/atomic |sh && \
     OSPd-nmap \
     OSPd && \
   yum -y clean all
-#RUN /usr/sbin/greenbone-nvt-sync && \
-#  /usr/sbin/greenbone-certdata-sync && \
-#  /usr/sbin/greenbone-scapdata-sync && \
-#  /usr/sbin/openvasmd --rebuild --progress
+RUN /usr/sbin/greenbone-nvt-sync && \
+  /usr/sbin/greenbone-certdata-sync && \
+  /usr/sbin/greenbone-scapdata-sync && \
+  /usr/sbin/openvasmd --rebuild
 
 ## copy config files to their places
 COPY config/redis.conf /etc/redis.conf
@@ -56,9 +59,10 @@ COPY config/openvas-cron /etc/cron.d/openvas.cron
 ## Apply cron job
 RUN crontab /etc/cron.d/openvas.cron
 
-## need to add hostname for start
-## and CA config
+## rebuild CA config
+RUN /usr/bin/openvas-manage-certs -a
 
+## start point
 COPY run.sh /usr/local/bin/run.sh
 RUN chmod +x /usr/local/bin/run.sh
 CMD /usr/local/bin/run.sh
