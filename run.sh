@@ -43,7 +43,7 @@ if [ "$OV_UPDATE" == "yes" ]; then
 	/usr/sbin/greenbone-nvt-sync
 	/usr/sbin/greenbone-certdata-sync
 	/usr/sbin/greenbone-scapdata-sync
-	/usr/sbin/openvasmd --rebuild --progress
+	/usr/sbin/openvasmd --rebuild
 fi
 
 /bin/tail -F /var/log/openvas/*
