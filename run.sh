@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## two vars for start cantainer
+## two vars for start container
 OV_PASSWORD=${OV_PASSWORD:-admin}
 PUBLIC_HOSTNAME=${PUBLIC_HOSTNAME:-openvas}
 OV_UPDATE=${OV_UPDATE:-no}
@@ -22,11 +22,13 @@ done
 
 ## start openvas system after redis
 /usr/sbin/openvassd
+/usr/bin/sleep 10
 /usr/sbin/openvasmd --listen=0.0.0.0 --port=9390 --database=/var/lib/openvas/mgr/tasks.db --max-ips-per-target=65536
-/usr/sbin/gsad
+#/usr/bin/sleep 10
+#/usr/sbin/gsad
 
 ## Check for users, and create admin
-if ! [[ $(openvasmd --get-users) ]] ; then
+if ! [[ $(openvasmd --get-users) ]]; then
 	/usr/sbin/openvasmd --create-user=admin --role=Admin
 	/usr/sbin/openvasmd --user=admin --new-password=$OV_PASSWORD
 fi
