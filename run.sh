@@ -22,11 +22,11 @@ done
 
 ## start openvas system after redis
 /usr/sbin/openvassd
-/usr/sbin/openvasmd
+/usr/sbin/openvasmd --listen=0.0.0.0 --port=9390 --database=/var/lib/openvas/mgr/tasks.db --max-ips-per-target=65536
 /usr/sbin/gsad
 
 ## Check for users, and create admin
-if ! [[ $(openvasmd --get-users) ]] ; then 
+if ! [[ $(openvasmd --get-users) ]] ; then
 	/usr/sbin/openvasmd openvasmd --create-user=admin
 	/usr/sbin/openvasmd --user=admin --new-password=$OV_PASSWORD
 fi
@@ -38,9 +38,10 @@ fi
 
 ## if need to update bases direct after start
 if [ "$OV_UPDATE" == "yes" ]; then
-	/usr/sbin/greenbone-nvt-sync 
-	/usr/sbin/greenbone-certdata-sync 
+	/usr/sbin/greenbone-nvt-sync
+	/usr/sbin/greenbone-certdata-sync
 	/usr/sbin/greenbone-scapdata-sync
+	/usr/sbin/openvasmd --rebuild
 fi
 
 /bin/tail -F /var/log/openvas/*
