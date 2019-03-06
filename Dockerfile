@@ -47,8 +47,8 @@ RUN wget -q -O - https://updates.atomicorp.com/installers/atomic |sh && \
   yum -y clean all
 RUN /usr/sbin/greenbone-nvt-sync && \
   /usr/sbin/greenbone-certdata-sync && \
-  /usr/sbin/greenbone-scapdata-sync && \
-  /usr/sbin/openvasmd --rebuild
+  /usr/sbin/greenbone-scapdata-sync
+#  /usr/sbin/openvasmd --rebuild
 
 ## copy config files to their places
 COPY config/redis.conf /etc/redis.conf
