@@ -24,7 +24,7 @@ First, look which ip address (by command `ip --brief address`) You will use to c
 Use next command to run container.
 
 ```shell
-docker run -d -p 443:<WEB_PORT> -p 9390:<OMP_PORT> -e PUBLIC_HOSTNAME=<YOUR_SERVER_IP> -e OV_PASSWORD=<YOUR_PASSWORD> --name openvas satandyh/openvas
+docker run -d -p 9390:<OMP_PORT> -e OV_PASSWORD=<YOUR_PASSWORD> --name openvas satandyh/openvas
 ```
 
 After some time container will up and You can connect to it thru the browser using URL **https://YOUR_SERVER_IP:WEB_PORT/**. Login will be **admin**. Password You choose by yourself otherwise it will be **admin**.
