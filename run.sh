@@ -13,36 +13,36 @@ fi
 redis-server /etc/redis.conf --daemonize yes
 
 ## redis check
-CHECK="$(/usr/bin/redis-cli -s /tmp/redis.sock ping)"
+CHECK="$(redis-cli -s /tmp/redis.sock ping)"
 while [ "${CHECK}" != "PONG" ]; do
   sleep 1
-  CHECK="$(/usr/bin/redis-cli -s /tmp/redis.sock ping)"
+  CHECK="$(redis-cli -s /tmp/redis.sock ping)"
 done
 
 ## start openvas system after redis
-/usr/sbin/openvassd
+openvassd
 #/usr/bin/sleep 10
-/usr/sbin/openvasmd --listen=0.0.0.0 --port=9390 --database=/var/lib/openvas/mgr/tasks.db --max-ips-per-target=65536
+openvasmd --listen=0.0.0.0 --port=9390 --database=/var/lib/openvas/mgr/tasks.db --max-ips-per-target=65536
 
 ## Check for users, and create admin
 if ! [[ $(openvasmd --get-users) ]]; then
-	/usr/sbin/openvasmd --create-user=admin --role=Admin
-	/usr/sbin/openvasmd --user=admin --new-password=$OV_PASSWORD
+	openvasmd --create-user=admin --role=Admin
+	openvasmd --user=admin --new-password=$OV_PASSWORD
 fi
 
 ## set admin pass
 if [ -n "$OV_PASSWORD" ]; then
-	/usr/sbin/openvasmd --user=admin --new-password=$OV_PASSWORD
+	openvasmd --user=admin --new-password=$OV_PASSWORD
 fi
 
 ## if need to update bases direct after start
 if [ "$OV_UPDATE" == "yes" ]; then
-	/usr/sbin/greenbone-nvt-sync
-	/usr/sbin/greenbone-certdata-sync
-	/usr/sbin/greenbone-scapdata-sync
-	/usr/sbin/openvasmd --rebuild
+	greenbone-nvt-sync
+	greenbone-certdata-sync
+	greenbone-scapdata-sync
+	openvasmd --rebuild
 fi
 
 crond
 
-/bin/tail -F /var/log/openvas/*
+tail -F /var/log/openvas/*
