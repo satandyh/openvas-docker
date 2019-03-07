@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ## two vars for start container
 OV_PASSWORD=${OV_PASSWORD:-admin}
@@ -10,7 +10,7 @@ if [ ! -f /var/lib/openvas/CA/cacert.pem ]; then
 fi
 
 ## start redis server first
-/usr/bin/redis-server /etc/redis.conf --daemonize yes
+redis-server /etc/redis.conf --daemonize yes
 
 ## redis check
 CHECK="$(/usr/bin/redis-cli -s /tmp/redis.sock ping)"
@@ -42,5 +42,7 @@ if [ "$OV_UPDATE" == "yes" ]; then
 	/usr/sbin/greenbone-scapdata-sync
 	/usr/sbin/openvasmd --rebuild
 fi
+
+crond
 
 /bin/tail -F /var/log/openvas/*
