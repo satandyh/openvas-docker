@@ -6,7 +6,7 @@ OV_UPDATE=${OV_UPDATE:-no}
 
 ## Check certs
 if [ ! -f /var/lib/openvas/CA/cacert.pem ]; then
-	/usr/bin/openvas-manage-certs -a
+	openvas-manage-certs -a
 fi
 
 ## start redis server first
