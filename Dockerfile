@@ -62,6 +62,11 @@ RUN crontab /etc/cron.d/openvas.cron
 ## rebuild CA config
 RUN /usr/bin/openvas-manage-certs -a
 
+## add entrypoint for crond
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+
 ## start point
 COPY run.sh /usr/local/bin/run.sh
 RUN chmod +x /usr/local/bin/run.sh
