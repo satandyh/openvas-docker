@@ -54,15 +54,17 @@ RUN /usr/sbin/greenbone-nvt-sync && \
 COPY config/redis.conf /etc/redis.conf
 COPY config/gsad /etc/sysconfig/gsad
 COPY config/openvas-manager /etc/sysconfig/openvas-manager
-## crontab tasks for every night update
+## copy crontab tasks for nightly update nvt update
 COPY config/openvas-cron /etc/cron.d/openvas.cron
-## Apply cron job
-RUN crontab /etc/cron.d/openvas.cron
+## Apply cron job and change some rights
+RUN crontab /etc/cron.d/openvas.cron && \
+  sed -i -e 's/^\(session.*pam_loginuid.so\)$/#\1/' /etc/pam.d/crond
 
 ## rebuild CA config
 RUN /usr/bin/openvas-manage-certs -a
 
 ## add entrypoint for crond
+## this script only add vars to cron env
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
@@ -70,6 +72,6 @@ ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 ## start point
 COPY run.sh /usr/local/bin/run.sh
 RUN chmod +x /usr/local/bin/run.sh
-CMD /usr/local/bin/run.sh
+CMD ["/usr/local/bin/run.sh"]
 
 EXPOSE 443 9390
