@@ -1,4 +1,0 @@
-- [ ] change structure for docker compose usage
-- [ ] check cron jobs tasks inside
-  - [ ] look for more good cron supporting logs and etc
-- [ ] maybe less containers will be better...
