@@ -57,7 +57,7 @@ COPY config/openvas-manager /etc/sysconfig/openvas-manager
 ## copy crontab tasks for nightly update nvt update
 COPY config/openvas-cron /etc/cron.d/openvas.cron
 ## Apply cron job and change some rights
-RUN crontab /etc/cron.d/openvas.cron
+RUN /usr/bin/crontab /etc/cron.d/openvas.cron
 RUN sed -i -e 's/^\(session.*pam_loginuid.so\)$/#\1/' /etc/pam.d/crond
 
 ## rebuild CA config
