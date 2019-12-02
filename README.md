@@ -55,7 +55,7 @@ After some time container will up and You can connect to it thru the browser usi
 
 ## to make connection to the master server
 
-1. Go inside container by command
+1. Go inside slave container by command
 
 ```shell
 docker exec -it openvas bash
@@ -82,7 +82,7 @@ cat /var/lib/openvas/CA/cacert.pem
 - **Host** - <YOUR_SERVER_IP>
 - **Port** - <OMP_PORT>
 - **Type** - OMP Slave
-- **CA Certificate** - download cacert.pem file
+- **CA Certificate** - download cacert.pem file from localhost
 - **Credential** - choose your just created credentials
 
 ## to sync signatures first time
